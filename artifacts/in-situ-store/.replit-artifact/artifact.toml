@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "In Situ — Furniture & Objects"
+description = "An editorial ecommerce storefront for In Situ, a considered collection of antique furniture, objects, lighting, art, and domestic goods."
+version = "1.0.0"
+id = "artifacts/in-situ-store"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21498
+
+[services.development]
+run = "pnpm --filter @workspace/in-situ-store run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/in-situ-store", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/in-situ-store/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21498"
+BASE_PATH = "/"

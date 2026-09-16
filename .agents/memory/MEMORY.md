@@ -1,0 +1,1 @@
+- [IN SITU visual direction](in-situ-visual-direction.md) — Keep the storefront image-first, immersive, sparse, and slightly confrontational rather than polished beige editorial.

@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-border: hsl(var(--border));
+  --font-serif: var(--app-font-serif);
+  --font-mono: var(--app-font-mono);
+}
+
+:root {
+  --background: 42 25% 92%; /* Ivory */
+  --foreground: 25 35% 15%; /* Espresso */
+  --muted: 42 15% 85%;
+  --muted-foreground: 25 15% 45%;
+  --border: 25 35% 15%;
+  
+  --app-font-serif: 'Cormorant Garamond', Georgia, serif;
+  --app-font-mono: 'DM Mono', monospace;
+}
+
+body {
+  font-family: var(--app-font-serif);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+}
+
+.display-serif { 
+  font-family: var(--app-font-serif); 
+}
+
+.mono { 
+  font-family: var(--app-font-mono); 
+  letter-spacing: 0.15em; 
+  text-transform: uppercase; 
+}
+
+.wordmark { 
+  font-family: var(--app-font-serif); 
+  letter-spacing: -0.01em; 
+  font-weight: 400; 
+  transform: scaleY(1.85);
+  display: inline-block;
+  transform-origin: center top;
+}
+
+.wordmark-wrapper {
+  padding-bottom: 0.85em; 
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--foreground) / 0.35) transparent;
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+}
