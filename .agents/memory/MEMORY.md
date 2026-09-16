@@ -1,1 +1,2 @@
 - [IN SITU visual direction](in-situ-visual-direction.md) — Keep the storefront image-first, immersive, sparse, and slightly confrontational rather than polished beige editorial.
+- [GitHub publishing](github-publishing.md) — This workspace may need GitHub’s API for pushes; respect connector rate limits and initialize empty repositories first.
