@@ -113,7 +113,7 @@ function CartDrawer({ cart, setCart, close }: any) {
             {cart.map((item: CartItem) => (
               <div key={item.product.id} className="flex gap-6 group">
                 <div className="w-24 h-32 bg-muted shrink-0">
-                  <img src={item.product.image} className="w-full h-full object-cover grayscale-[20%]" />
+                  <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover grayscale-[20%]" />
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   <div>
@@ -123,9 +123,21 @@ function CartDrawer({ cart, setCart, close }: any) {
                   <div className="flex justify-between items-end">
                     <p className="mono text-[10px]">{money(item.product.price)}</p>
                     <div className="flex items-center gap-4 border border-foreground px-2 py-1">
-                       <button onClick={() => updateQuantity(item.product.id, -1)}><Minus size={10}/></button>
-                       <span className="mono text-[10px]">{item.quantity}</span>
-                       <button onClick={() => updateQuantity(item.product.id, 1)}><Plus size={10}/></button>
+                       <button
+                         type="button"
+                         aria-label={`Decrease quantity of ${item.product.name}`}
+                         onClick={() => updateQuantity(item.product.id, -1)}
+                       >
+                         <Minus size={10} aria-hidden="true" />
+                       </button>
+                       <span className="mono text-[10px]" aria-live="polite">{item.quantity}</span>
+                       <button
+                         type="button"
+                         aria-label={`Increase quantity of ${item.product.name}`}
+                         onClick={() => updateQuantity(item.product.id, 1)}
+                       >
+                         <Plus size={10} aria-hidden="true" />
+                       </button>
                     </div>
                   </div>
                 </div>
@@ -164,7 +176,11 @@ function SearchDrawer({ close }: { close: () => void }) {
         <button onClick={close} className="mono text-[10px] hover:opacity-70">Close</button>
       </div>
       <div className="flex-1 flex flex-col justify-center px-6 md:px-24 w-full max-w-5xl mx-auto">
+        <label htmlFor="store-search" className="mono mb-4 text-[10px]">
+          Search products
+        </label>
         <input 
+          id="store-search"
           autoFocus 
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -370,10 +386,12 @@ function Shop({ addToCart }: { addToCart: (p: Product) => void }) {
         <div className="grid grid-cols-1 md:grid-cols-2 border-t border-foreground">
           {filtered.map(p => (
             <div key={p.id} className="group relative w-full aspect-[4/5] border-b border-foreground md:even:border-l overflow-hidden bg-muted">
-               <img src={p.image} className="absolute inset-0 w-full h-full object-cover grayscale-[15%] transition-transform duration-[2.5s] group-hover:scale-105" />
+               <img src={p.image} alt={p.name} className="absolute inset-0 w-full h-full object-cover grayscale-[15%] transition-transform duration-[2.5s] group-hover:scale-105" />
                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700 pointer-events-none" />
                
-               <Link href={`/product/${p.id}`} className="absolute inset-0 z-10" />
+               <Link href={`/product/${p.id}`} className="absolute inset-0 z-10">
+                 <span className="sr-only">View {p.name}</span>
+               </Link>
                
                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 flex flex-col justify-end text-white mix-blend-difference pointer-events-none z-20 h-1/2 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                  <div className="flex justify-between items-end">
@@ -410,7 +428,7 @@ function ProductDetail({ addToCart, openCart }: { addToCart: (p: Product) => voi
       <div className="w-full md:w-[60%] h-[60vh] md:h-[100dvh] md:sticky md:top-0 bg-muted">
         <motion.img 
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}
-          src={product.image} className="w-full h-full object-cover" 
+          src={product.image} alt={product.name} className="w-full h-full object-cover" 
         />
       </div>
       <div className="w-full md:w-[40%] bg-foreground text-background min-h-[50vh] md:min-h-[100dvh] p-8 md:p-20 flex flex-col justify-center relative">
@@ -443,7 +461,7 @@ function Collections() {
        <div className="flex flex-col">
          {collections.map((c) => (
            <Link key={c.slug} href={`/collection/${c.slug}`} className="group relative w-full h-[60vh] md:h-[90vh] border-t border-background/20 overflow-hidden block bg-black">
-             <img src={c.image} className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 group-hover:scale-105 transition-all duration-[3s] grayscale-[20%]" />
+              <img src={c.image} alt={`${c.title} collection`} className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 group-hover:scale-105 transition-all duration-[3s] grayscale-[20%]" />
              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mix-blend-difference text-white">
                <p className="mono text-[10px] mb-6">{c.kicker}</p>
                <h2 className="display-serif text-5xl md:text-[100px] leading-none text-center px-4">{c.title}</h2>
@@ -485,7 +503,7 @@ function Visit() {
         </button>
       </div>
       <div className="w-full md:w-1/2 h-[50vh] md:h-[100dvh]">
-        <img src={image('271743', 1200)} className="w-full h-full object-cover grayscale opacity-80" />
+        <img src={image('271743', 1200)} alt="The IN SITU showroom in New York" className="w-full h-full object-cover grayscale opacity-80" />
       </div>
     </div>
   );
